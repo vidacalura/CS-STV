@@ -2,8 +2,9 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/vidacalura/CS-STV/models"
-	"github.com/vidacalura/CS-STV/utils"
+	"github.com/vidacalura/CS-STV/internal/models"
+	"github.com/vidacalura/CS-STV/internal/services"
+	"github.com/vidacalura/CS-STV/internal/utils"
 )
 
 func NewRouter() *gin.Engine {
@@ -16,6 +17,16 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.Use(CORSMiddleFunc())
+
+	dupla := r.Group("/api/duplas")
+	{
+		dupla.GET("/ranking", services.GetRankingDuplas)
+	}
+
+	poftw := r.Group("/api/player-of-the-week")
+	{
+		poftw.GET("", services.GetPlayerOfTheWeek)
+	}
 
 	return r
 }

@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/vidacalura/CS-STV/routes"
+	"github.com/vidacalura/CS-STV/internal/routes"
 )
 
 func main() {
