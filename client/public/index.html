@@ -3,7 +3,7 @@
 
     <head>
 
-        <title></title>
+        <title>CS: Source: Torneios & Notícias</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="CSS/output.css" rel="stylesheet">
@@ -13,7 +13,81 @@
 
     <body>
     
+        <header>
+            <h1 class="font-bold text-2xl 2xl:text-4xl">CS:STV</h1>
 
+            <nav id="nav-home" class="mb-12">
+                <ul>
+                    <a href="">
+                        <li>Partidas</li>
+                    </a>
+                    <a href="">
+                        <li>Ranking Duplas</li>
+                    </a>
+                    <a href="">
+                        <li>Eventos</li>
+                    </a>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-home">
+            <!-- Ranking -->
+            <div id="container-ranking-home" class="menu-home w-[17%]">
+                <!-- Player of the week -->
+                <div id="container-player-of-the-week"
+                    class="bg-[#393467] w-full px-3 py-5">
+                    <h2 class="text-[#BBB] pb-4"> MVP da semana </h2>
+                    <p id="player-of-the-week-name" class="font-bold text-xl underline pb-4"> guedinhos </p>
+                    <p id="player-of-the-week-dados" class="font-bold text-xl"> 1.35 </p>
+                    <p id="player-of-the-week-info-dados" class="font-bold text-lg text-[#BBB]"> K/D </p>
+                </div>
+
+                <!-- Top 5 times -->
+                <div>
+                    <h2 class="text-center font-bold text-[#BBB] pt-8 pb-3 px-3">
+                        Top 5 Duplas da semana
+                    </h2>
+
+                    <div class="border border-[#BBB] mx-10"></div>
+
+                    <div id="container-top-5-duplas-home">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notícias -->
+            <div id="container-noticias-home" class="menu-home w-[49%]">
+
+            </div>
+
+            <!-- Partidas recentes -->
+            <div id="container-partidas-home" class="menu-home w-[17%]">
+                    <h2 class="text-center font-bold text-[#BBB] pt-8 pb-3 px-3">
+                        Partidas próximas
+                    </h2>
+
+                    <div class="border border-[#BBB] mx-10"></div>
+
+                    <div id="container-partidas-home">
+
+                    </div>
+            </div>
+
+            <!-- Eventos recentes -->
+            <div id="container-eventos-home" class="menu-home w-[17%]">
+                    <h2 class="text-center font-bold text-[#BBB] pt-8 pb-3 px-3">
+                        Eventos recentes
+                    </h2>
+
+                    <div class="border border-[#BBB] mx-10"></div>
+
+                    <div id="container-eventos-home">
+
+                    </div>
+            </div>
+        </main>
 
     </body>
 

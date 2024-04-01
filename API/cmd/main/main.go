@@ -2,9 +2,10 @@ package main
 
 import (
 	"log"
-	//"os"
+	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/vidacalura/CS-STV/routes"
 )
 
 func main() {
@@ -13,9 +14,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//router := routes.NewRouter()
+	router := routes.NewRouter()
 
-	//if err := router.Run(":" + os.Getenv("PORT")); err != nil {
-	//	log.Fatal(err.Error())
-	//}
+	if err := router.Run(":" + os.Getenv("PORT")); err != nil {
+		log.Fatal(err.Error())
+	}
 }
