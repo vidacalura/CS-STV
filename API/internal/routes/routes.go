@@ -1,6 +1,9 @@
 package routes
 
 import (
+	"time"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/vidacalura/CS-STV/internal/models"
 	"github.com/vidacalura/CS-STV/internal/services"
@@ -28,6 +31,11 @@ func NewRouter() *gin.Engine {
 		evnt.GET("/recentes", services.GetEventosRecentes)
 	}
 
+	notc := r.Group("/api/noticias")
+	{
+		notc.GET("/feed", services.GetFeedNoticias)
+	}
+
 	part := r.Group("/api/partidas")
 	{
 		part.GET("/recentes", services.GetPartidasRecentes)
@@ -42,18 +50,13 @@ func NewRouter() *gin.Engine {
 }
 
 func CORSMiddleFunc() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		//c.Writer.Header().Set("Access-Control-Allow-Origin", "https://site-do-ngc-ai.com")
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:4000")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	}
+	return cors.New(cors.Config{
+		//AllowOrigins:     []string{"http://127.0.0.1:5500"},
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	})
 }

@@ -11,6 +11,7 @@ import (
 type PlayerOfTheWeek struct {
 	CodPoftw     int         `json:"codPoftw"`
 	SteamId      int         `json:"steamId"`
+	Nome         string      `json:"nome"`
 	CodJog       int         `json:"codJog"`
 	Dados        null.Float  `json:"dados"`
 	InfoDados    string      `json:"infoDados"`
@@ -28,16 +29,14 @@ func (p PlayerOfTheWeek) IsValid() (bool, error) {
 // Retorna o Player of the week da última semana
 func (p *PlayerOfTheWeek) GetUltimoPlayerOfTheWeek() (int, error) {
 	query := `	
-		SELECT PlayerOfTheWeek.*, Jogadores.steam_id
+		SELECT *
 		FROM PlayerOfTheWeek
-		INNER JOIN Jogadores
-		ON PlayerOfTheWeek.cod_jog = Jogadores.cod_jog
 		ORDER BY cod_poftw DESC
 		LIMIT 1;`
 
 	row := E.DB.QueryRow(query)
 	err := row.Scan(&p.CodPoftw, &p.CodJog, &p.Dados, &p.InfoDados, &p.SemanaInicio,
-		&p.SemanaFim, &p.SteamId)
+		&p.SemanaFim, &p.Nome)
 	if err != nil {
 		log.Println(err)
 		return http.StatusInternalServerError,

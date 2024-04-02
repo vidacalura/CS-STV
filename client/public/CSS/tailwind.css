@@ -8,7 +8,7 @@
 
 body {
     background-color: #121116;
-    @apply text-white w-[100vw] h-full overflow-x-hidden;
+    @apply text-white w-[100vw] overflow-x-hidden pb-8;
 }
 
 header {
@@ -16,7 +16,8 @@ header {
 }
 
 #nav-home {
-    @apply w-full ml-[22vw] mr-[27vw] py-2 2xl:py-4 flex justify-center border-2 rounded-2xl;
+    @apply w-full text-sm lg:text-base ml-[22vw] mr-[27vw] py-2 2xl:py-4 flex justify-center lg:border-2 rounded-2xl;
+    align-items: center;
 }
 #nav-home ul {
     @apply flex justify-center gap-12 font-bold 2xl:text-lg;
@@ -26,7 +27,7 @@ header {
 }
 
 #main-home {
-    @apply w-[66vw] h-[100vh] rounded flex gap-8;
+    @apply w-[85vw] 2xl:w-[66vw] h-[100vh] rounded flex flex-col lg:flex-row gap-8;
     margin: 0 auto;
 }
 .menu-home {
@@ -35,4 +36,39 @@ header {
 
 #container-player-of-the-week {
     @apply text-center;
+}
+
+.dupla-ranking-container {
+    @apply flex gap-2 text-sm mx-3 mb-2 py-2 px-3 bg-[#353243] rounded-sm shadow-sm;
+    align-items: center;
+}
+.dupla-ranking-container img {
+    @apply w-[20%];
+}
+
+.partida-home-container {
+    @apply w-full text-sm px-3 pt-3 pb-4 bg-[#353243] border-b border-[#A7A4C6];
+}
+.data-partida-home {
+    @apply pb-4 text-[#BBB] font-bold;
+}
+.partida-home-dupla-container {
+    @apply flex justify-between pb-2;
+}
+.partida-home-dupla-container p {
+    @apply px-1;
+}
+
+.res-partida-vitoria {
+    @apply text-[#39EB00] font-bold;
+}
+.res-partida-empate {
+    @apply font-bold;
+}
+.res-partida-derrota {
+    @apply text-[#FF4949] font-bold;
+}
+
+.evento-home-container {
+    @apply w-full px-5 py-4 mt-6 bg-[#353243] border-b border-[#A7A4C6];
 }

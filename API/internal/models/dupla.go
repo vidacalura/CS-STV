@@ -13,6 +13,7 @@ type Dupla struct {
 	Nome        string      `json:"nome"`
 	Logo        null.String `json:"logo"`
 	Roster      Roster      `json:"roster"`
+	Rank        int         `json:"rank"`
 	Elo         float64     `json:"elo"`
 	DataCriacao string      `json:"dataCriacao"`
 	PaisOrg     string      `json:"paisOrg"`
@@ -58,8 +59,11 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 			fmt.Errorf("Erro ao retornar ranking do banco de dados.")
 	}
 
+	i := 1
 	for rows.Next() {
 		var dupla Dupla
+		dupla.Rank = i
+
 		err := rows.Scan(&dupla.CodDupla, &dupla.Nome, &dupla.Logo, &dupla.Elo,
 			&dupla.DataCriacao, &dupla.PaisOrg)
 		if err != nil {
@@ -68,6 +72,7 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 		}
 
 		*d = append(*d, dupla)
+		i++
 	}
 
 	defer rows.Close()
@@ -95,7 +100,7 @@ func (d *Dupla) GetDuplaByID(codDupla int) (int, error) {
 		LIMIT 1;`
 	row = E.DB.QueryRow(queryRoster, codDupla)
 	err = row.Scan(&d.Roster.CodRoster, &d.Roster.CodDupla, &d.Roster.CodIGL,
-		&d.Roster.CodJog2, &d.Roster.CodJogBench, &d.Roster.CodCoach, 
+		&d.Roster.CodJog2, &d.Roster.CodJogBench, &d.Roster.CodCoach,
 		&d.Roster.InicioRoster, &d.Roster.FimRoster)
 	if err != nil {
 		log.Println(err)
