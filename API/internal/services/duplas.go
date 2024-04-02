@@ -19,3 +19,7 @@ func GetRankingDuplas(c *gin.Context) {
         "message": "Ranking encontrado com sucesso!",
     })
 }
+
+func GetDuplaByID(c *gin.Context) {
+    // TODO
+}

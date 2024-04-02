@@ -25,7 +25,7 @@ func (p PlayerOfTheWeek) IsValid() (bool, error) {
 	return true, nil
 }
 
-// Retorna Player of the week da última semana
+// Retorna o Player of the week da última semana
 func (p *PlayerOfTheWeek) GetUltimoPlayerOfTheWeek() (int, error) {
 	query := `	
 		SELECT PlayerOfTheWeek.*, Jogadores.steam_id
@@ -40,8 +40,8 @@ func (p *PlayerOfTheWeek) GetUltimoPlayerOfTheWeek() (int, error) {
 		&p.SemanaFim, &p.SteamId)
 	if err != nil {
 		log.Println(err)
-		return http.StatusInternalServerError, 
-			fmt.Errorf("Erro ao receber Jogador da semana do banco de dados.")	
+		return http.StatusInternalServerError,
+			fmt.Errorf("Erro ao receber Jogador da semana do banco de dados.")
 	}
 
 	return http.StatusOK, nil

@@ -31,6 +31,8 @@ type Roster struct {
 	FimRoster    null.String `json:"fimRoster"`
 }
 
+type Rosters []Roster
+
 // Valida uma instância de Dupla
 func (d Dupla) IsValid() (bool, error) {
 	// TODD
@@ -75,6 +77,37 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 
 // Pega todos os dados de uma dupla
 func (d *Dupla) GetDuplaByID(codDupla int) (int, error) {
+	queryDupla := "SELECT * FROM Duplas WHERE cod_dupla = ?;"
+
+	row := E.DB.QueryRow(queryDupla, codDupla)
+	err := row.Scan(&d.CodDupla, &d.Nome, &d.Logo, &d.Elo, &d.DataCriacao,
+		&d.PaisOrg)
+	if err != nil {
+		log.Println(err)
+		return http.StatusNotFound,
+			fmt.Errorf("Dupla não existente ou não encontrada.")
+	}
+
+	queryRoster := `
+		SELECT * FROM DuplasRoster
+		WHERE cod_dupla = ?
+		ORDER BY inicio_roster DESC
+		LIMIT 1;`
+	row = E.DB.QueryRow(queryRoster, codDupla)
+	err = row.Scan(&d.Roster.CodRoster, &d.Roster.CodDupla, &d.Roster.CodIGL,
+		&d.Roster.CodJog2, &d.Roster.CodJogBench, &d.Roster.CodCoach, 
+		&d.Roster.InicioRoster, &d.Roster.FimRoster)
+	if err != nil {
+		log.Println(err)
+		return http.StatusNotFound,
+			fmt.Errorf("Dupla não possui jogadores em atividade.")
+	}
+
+	return http.StatusOK, nil
+}
+
+// Pega todas as Rosters de uma dupla
+func (r *Rosters) GetAllRosters(codDupla int) (int, error) {
 	// TODO
 
 	return http.StatusOK, nil
