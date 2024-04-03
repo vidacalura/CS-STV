@@ -72,3 +72,10 @@ header {
 .evento-home-container {
     @apply w-full px-5 py-4 mt-6 bg-[#353243] border-b border-[#A7A4C6];
 }
+
+.container-noticias-home {
+    @apply bg-[#A7A4C6] rounded py-3 px-5 text-black;
+}
+.container-noticias-home p {
+    @apply text-sm text-[#333] pb-1;
+}

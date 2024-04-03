@@ -1,9 +1,12 @@
-const API = "http://127.0.0.1:4000/api";
+//const API = "http://127.0.0.1:4000/api";
+const API = "https://cs-stv.onrender.com/api";
 
 const concatStr = (str1, str2) => str1.concat(str2);
 const atualizarTexto = (DOMElement, str) => DOMElement.textContent = str;
 const atualizarImagemSrc = (DOMElement, src) => DOMElement.src = src;
+const atualizarHref = (DOMElement, link) => DOMElement.href = link;
 const formatarData = data => data.split("-").reverse().join("/");
+const mostrarMsgErro = err => err != null ? alert(err) : null;
 
 const fetchCSSTVAPI = async pathAPI => 
     fetch(concatStr(API, pathAPI))
@@ -27,6 +30,9 @@ const mostrarPlayerOfTheWeek = async (fetchFunc, path) => {
 
 /* Ranking Duplas */
 const criarElementoRankingDuplas = dupla => {
+    const linkContainer = document.createElement("a");
+    atualizarHref(linkContainer, concatStr("dupla.html?codDupla=", dupla.codDupla));
+
     const containerDupla = document.createElement("div");
     containerDupla.classList.add("dupla-ranking-container");
 
@@ -43,14 +49,17 @@ const criarElementoRankingDuplas = dupla => {
     containerDupla.appendChild(logoDupla);
     containerDupla.appendChild(nomeDupla);
 
+    linkContainer.appendChild(containerDupla);
+
     const container = document.getElementById("container-top-5-duplas-home");
-    container.appendChild(containerDupla);
+    container.appendChild(linkContainer);
 };
 
 const mostrarRankingDuplas = async (fetchFunc, path) => {
     const res = await fetchFunc(path);
+    mostrarMsgErro(res.error);
+
     const rankingArr = res.ranking;
-    // checar erro
     rankingArr.map(criarElementoRankingDuplas);
 };
 
@@ -63,6 +72,9 @@ const getClasseResultadoPartida = (pontosTimeA, pontosTimeB) =>
     : "res-partida-derrota";
 
 const criarElementoPartida = prtd => {
+    const linkContainer = document.createElement("a");
+    atualizarHref(linkContainer, concatStr("partida.html?codPrtd=", prtd.codPrtd));
+
     const prtdContainer = document.createElement("div");
     prtdContainer.classList.add("partida-home-container");
 
@@ -102,19 +114,25 @@ const criarElementoPartida = prtd => {
     prtdContainer.appendChild(timeCasaContainer);
     prtdContainer.appendChild(timeForaContainer);
 
+    linkContainer.appendChild(prtdContainer);
+
     const container = document.getElementById("container-partidas-home");
-    container.appendChild(prtdContainer);
+    container.appendChild(linkContainer);
 };
 
 const mostrarPartidasRecentes = async (fetchFunc, path) => {
     const res = await fetchFunc(path);
+    mostrarMsgErro(res.error);
+
     const partidasArr = res.partidas;
-    // checar erro
     partidasArr.map(criarElementoPartida);
 };
 
 /* Eventos recentes */
 const criarElementoEvento = evnt => {
+    const linkContainer = document.createElement("a");
+    atualizarHref(linkContainer, concatStr("evento.html?codEvnt=", evnt.codEvnt));
+
     const eventoContainer = document.createElement("div");
     eventoContainer.classList.add("evento-home-container");
 
@@ -122,18 +140,52 @@ const criarElementoEvento = evnt => {
     atualizarTexto(nomeEvento, evnt.evento);
     eventoContainer.appendChild(nomeEvento);
 
+    linkContainer.appendChild(eventoContainer);
+
     const container = document.getElementById("container-eventos-home");
-    container.append(eventoContainer);
+    container.append(linkContainer);
 };
 
 const mostrarEventosRecentes = async (fetchFunc, path) => {
     const res = await fetchFunc(path);
+    mostrarMsgErro(res.error);
+
     const eventosArr = res.eventos;
-    // checar erro
     eventosArr.map(criarElementoEvento);
 }
+
+/* Feed de notícias */
+const criarElementoNoticia = notc => {
+    const linkContainer = document.createElement("a");
+    atualizarHref(linkContainer, concatStr("noticia.html?codNotc=", notc.codNotc));
+
+    const noticiaContainer = document.createElement("div");
+    noticiaContainer.classList.add("container-noticias-home");
+
+    const dataNoticia = document.createElement("p");
+    atualizarTexto(dataNoticia, formatarData(notc.data));
+    noticiaContainer.appendChild(dataNoticia);
+
+    const tituloNoticia = document.createElement("h3");
+    atualizarTexto(tituloNoticia, notc.titulo);
+    noticiaContainer.appendChild(tituloNoticia);
+
+    linkContainer.appendChild(noticiaContainer)
+
+    const container = document.getElementById("container-noticias-home");
+    container.appendChild(linkContainer);
+};
+
+const mostrarFeedNoticias = async (fetchFunc, path) => {
+    const res = await fetchFunc(path);
+    mostrarMsgErro(res.error);
+
+    const noticiasArr = res.feed;
+    noticiasArr.map(criarElementoNoticia);
+};
 
 mostrarPlayerOfTheWeek(fetchCSSTVAPI, "/player-of-the-week");
 mostrarRankingDuplas(fetchCSSTVAPI, "/duplas/ranking");
 mostrarPartidasRecentes(fetchCSSTVAPI, "/partidas/recentes");
 mostrarEventosRecentes(fetchCSSTVAPI, "/eventos/recentes");
+mostrarFeedNoticias(fetchCSSTVAPI, "/noticias/feed");
