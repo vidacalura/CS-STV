@@ -1,18 +1,6 @@
 //const API = "http://127.0.0.1:4000/api";
 const API = "https://cs-stv.onrender.com/api";
 
-const concatStr = (str1, str2) => str1.concat(str2);
-const atualizarTexto = (DOMElement, str) => DOMElement.textContent = str;
-const atualizarImagemSrc = (DOMElement, src) => DOMElement.src = src;
-const atualizarHref = (DOMElement, link) => DOMElement.href = link;
-const formatarData = data => data.split("-").reverse().join("/");
-const mostrarMsgErro = err => err != null ? alert(err) : null;
-
-const fetchCSSTVAPI = async pathAPI => 
-    fetch(concatStr(API, pathAPI))
-        .then(res => res.json())
-        .then(res => res);
-
 /* Player of the week */
 const mostrarPlayerOfTheWeek = async (fetchFunc, path) => {
     const res = await fetchFunc(path);

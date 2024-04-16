@@ -74,8 +74,22 @@ header {
 }
 
 .container-noticias-home {
-    @apply bg-[#A7A4C6] rounded py-3 px-5 text-black;
+    @apply bg-[#A7A4C6] rounded py-3 px-5 mb-4 text-black;
 }
 .container-noticias-home p {
     @apply text-sm text-[#333] pb-1;
+}
+
+#container-noticia {
+    @apply bg-[#1F1D27] rounded px-[10%] md:h-screen py-24 w-[85vw] md:w-[60vw];
+    margin: 0 auto;
+}
+#container-noticia h2 {
+    @apply text-center text-2xl md:text-3xl font-bold pb-4;
+}
+#container-noticia h3 {
+    @apply text-center md:text-lg text-[#CCC];
+}
+#data-noticia {
+    @apply text-center text-[#AAA] text-sm md:text-base font-bold pt-8 pb-16;
 }
