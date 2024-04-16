@@ -21,7 +21,7 @@ type FeedNoticias []Noticia
 // Valida uma instância de Noticia
 func (n Noticia) IsValid() (bool, error) {
 	// TODO
-	
+
 	return true, nil
 }
 
@@ -29,7 +29,7 @@ func (n Noticia) IsValid() (bool, error) {
 func (f *FeedNoticias) GetFeedNoticias() (int, error) {
 	query := `
 		SELECT cod_notc, titulo, subtitulo, data FROM Noticias
-		ORDER BY data DESC
+		ORDER BY data DESC, cod_notc DESC
 		LIMIT 10;`
 
 	rows, err := E.DB.Query(query)
@@ -49,6 +49,20 @@ func (f *FeedNoticias) GetFeedNoticias() (int, error) {
 		}
 
 		*f = append(*f, n)
+	}
+
+	return http.StatusOK, nil
+}
+
+// Retorna uma notícia com base em seu ID
+func (n *Noticia) GetNoticiaByID(codNotc int) (int, error) {
+	query := "SELECT * FROM Noticias WHERE cod_notc = ?"
+
+	row := E.DB.QueryRow(query, codNotc)
+	err := row.Scan(&n.CodNotc, &n.Titulo, &n.Subtitulo, &n.Noticia, &n.Data)
+	if err != nil {
+		log.Println(err)
+		return http.StatusNotFound, fmt.Errorf("Notícia não encontrada.")
 	}
 
 	return http.StatusOK, nil

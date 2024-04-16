@@ -3,22 +3,22 @@
 package utils
 
 import (
-	"database/sql"
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 	//"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
-func ConectarBD() *sql.DB {
+func ConectarBD() *sqlx.DB {
 	//err := godotenv.Load()
 	//if err != nil {
 	//	log.Fatal(err)
 	//}
 
 	// Conecta ao banco de dados
-	db, err := sql.Open("mysql", os.Getenv("DSN"))
+	db, err := sqlx.Connect("postgres", os.Getenv("DSN"))
 	if err != nil {
 		log.Fatal(err)
 	}

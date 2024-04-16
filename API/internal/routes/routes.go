@@ -34,6 +34,7 @@ func NewRouter() *gin.Engine {
 	notc := r.Group("/api/noticias")
 	{
 		notc.GET("/feed", services.GetFeedNoticias)
+		notc.GET("/:codNotc", services.GetNoticiaByID)
 	}
 
 	part := r.Group("/api/partidas")

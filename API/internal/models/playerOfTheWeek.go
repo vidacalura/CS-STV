@@ -35,8 +35,8 @@ func (p *PlayerOfTheWeek) GetUltimoPlayerOfTheWeek() (int, error) {
 		LIMIT 1;`
 
 	row := E.DB.QueryRow(query)
-	err := row.Scan(&p.CodPoftw, &p.CodJog, &p.Dados, &p.InfoDados, &p.SemanaInicio,
-		&p.SemanaFim, &p.Nome)
+	err := row.Scan(&p.CodPoftw, &p.CodJog, &p.Nome, &p.Dados, &p.InfoDados,
+		&p.SemanaInicio, &p.SemanaFim)
 	if err != nil {
 		log.Println(err)
 		return http.StatusInternalServerError,
