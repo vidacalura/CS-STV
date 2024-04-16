@@ -56,7 +56,7 @@ func (f *FeedNoticias) GetFeedNoticias() (int, error) {
 
 // Retorna uma notícia com base em seu ID
 func (n *Noticia) GetNoticiaByID(codNotc int) (int, error) {
-	query := "SELECT * FROM Noticias WHERE cod_notc = ?"
+	query := "SELECT * FROM Noticias WHERE cod_notc = $1"
 
 	row := E.DB.QueryRow(query, codNotc)
 	err := row.Scan(&n.CodNotc, &n.Titulo, &n.Subtitulo, &n.Noticia, &n.Data)

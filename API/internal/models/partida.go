@@ -50,7 +50,7 @@ func (partidas *Partidas) GetPartidasRecentes() (int, error) {
 		SELECT * FROM Partidas
 		ORDER BY data DESC
 		LIMIT 8;`
-	
+
 	rows, err := E.DB.Query(query)
 	if err != nil {
 		log.Println(err)
@@ -69,13 +69,12 @@ func (partidas *Partidas) GetPartidasRecentes() (int, error) {
 				fmt.Errorf("Erro ao receber partidas recentes do banco de dados.")
 		}
 
-		queryDupla := "SELECT nome, logo FROM Duplas WHERE cod_dupla = ?;"
+		queryDupla := "SELECT nome, logo FROM Duplas WHERE cod_dupla = $1;"
 		row := E.DB.QueryRow(queryDupla, p.TimeCasa.CodDupla)
 		if err := row.Scan(&p.TimeCasa.Nome, &p.TimeCasa.LogoURL); err != nil {
 			log.Println(err)
 			return http.StatusInternalServerError,
 				fmt.Errorf("Erro ao receber partidas recentes do banco de dados.")
-
 		}
 
 		row = E.DB.QueryRow(queryDupla, p.TimeFora.CodDupla)

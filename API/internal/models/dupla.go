@@ -17,6 +17,7 @@ type Dupla struct {
 	Elo         float64     `json:"elo"`
 	DataCriacao string      `json:"dataCriacao"`
 	PaisOrg     string      `json:"paisOrg"`
+	Ativo       bool        `json:"ativo"`
 }
 
 type Duplas []Dupla
@@ -50,7 +51,7 @@ func (r Roster) IsValid() (bool, error) {
 
 // Pega o ranking das duplas atualizado
 func (d *Duplas) GetRankingDuplas() (int, error) {
-	query := "SELECT * FROM Duplas ORDER BY elo DESC;"
+	query := "SELECT * FROM Duplas WHERE ativo = TRUE ORDER BY elo DESC LIMIT 5;"
 
 	rows, err := E.DB.Query(query)
 	if err != nil {
@@ -65,7 +66,7 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 		dupla.Rank = i
 
 		err := rows.Scan(&dupla.CodDupla, &dupla.Nome, &dupla.Logo, &dupla.Elo,
-			&dupla.DataCriacao, &dupla.PaisOrg)
+			&dupla.DataCriacao, &dupla.PaisOrg, &dupla.Ativo)
 		if err != nil {
 			return http.StatusInternalServerError,
 				fmt.Errorf("Erro ao retornar ranking do banco de dados.")
@@ -82,7 +83,7 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 
 // Pega todos os dados de uma dupla
 func (d *Dupla) GetDuplaByID(codDupla int) (int, error) {
-	queryDupla := "SELECT * FROM Duplas WHERE cod_dupla = ?;"
+	queryDupla := "SELECT * FROM Duplas WHERE cod_dupla = $1;"
 
 	row := E.DB.QueryRow(queryDupla, codDupla)
 	err := row.Scan(&d.CodDupla, &d.Nome, &d.Logo, &d.Elo, &d.DataCriacao,
