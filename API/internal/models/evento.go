@@ -51,3 +51,34 @@ func (e *Eventos) GetEventosRecentes() (int, error) {
 
 	return http.StatusOK, nil
 }
+
+// Pega todos os eventos de que uma dupla participou
+func (e *Eventos) GetEventosByTimeID(codTime int) (int, error) {
+	query := `
+		SELECT Eventos.*
+		FROM Eventos
+		INNER JOIN RankingEventos
+		ON Eventos.cod_evnt = RankingEventos.cod_evnt
+		WHERE RankingEventos.cod_time = $1;`
+
+	rows, err := E.DB.Query(query, codTime)
+	if err != nil {
+		log.Println(err)
+		return http.StatusInternalServerError,
+			fmt.Errorf("Erro ao receber eventos do time do banco de dados.")
+	}
+
+	for rows.Next() {
+		var evnt Evento
+		err := rows.Scan(&evnt.CodEvnt, &evnt.Nome, &evnt.Inicio, &evnt.Fim)
+		if err != nil {
+			log.Println(err)
+			return http.StatusInternalServerError,
+				fmt.Errorf("Erro ao receber eventos do time do banco de dados.")
+		}
+
+		*e = append(*e, evnt)
+	}
+
+	return http.StatusOK, nil
+}

@@ -1,8 +1,11 @@
 package services
 
-import(
-    "github.com/gin-gonic/gin"
-    "github.com/vidacalura/CS-STV/internal/models"
+import (
+	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/vidacalura/CS-STV/internal/models"
 )
 
 func GetRankingDuplas(c *gin.Context) {
@@ -21,5 +24,24 @@ func GetRankingDuplas(c *gin.Context) {
 }
 
 func GetDuplaByID(c *gin.Context) {
-    // TODO
+    codDupla, err := strconv.Atoi(c.Param("codDupla"))
+    if err != nil {
+        c.IndentedJSON(http.StatusBadRequest, gin.H{
+            "error": "Código de dupla inválido",
+        })
+        return
+    }
+
+    var dupla models.Dupla
+
+    statusCode, err := dupla.GetDuplaByID(codDupla)
+    if err != nil {
+        c.IndentedJSON(statusCode, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.IndentedJSON(statusCode, gin.H{
+        "dupla": dupla,
+        "message": "Dupla encontrada com sucesso!",
+    })
 }

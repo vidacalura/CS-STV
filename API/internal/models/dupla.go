@@ -83,11 +83,21 @@ func (d *Duplas) GetRankingDuplas() (int, error) {
 
 // Pega todos os dados de uma dupla
 func (d *Dupla) GetDuplaByID(codDupla int) (int, error) {
-	queryDupla := "SELECT * FROM Duplas WHERE cod_dupla = $1;"
+	queryDupla := `
+		SELECT *, rank
+		FROM
+			(SELECT 
+				*,
+				ROW_NUMBER() OVER (ORDER BY elo DESC) AS rank 
+			FROM
+				Duplas
+			WHERE
+				ativo = TRUE) AS ranked_duplas
+		WHERE cod_dupla = $1;`
 
 	row := E.DB.QueryRow(queryDupla, codDupla)
 	err := row.Scan(&d.CodDupla, &d.Nome, &d.Logo, &d.Elo, &d.DataCriacao,
-		&d.PaisOrg)
+		&d.PaisOrg, &d.Ativo, &d.Rank, &d.Rank)
 	if err != nil {
 		log.Println(err)
 		return http.StatusNotFound,
@@ -96,7 +106,7 @@ func (d *Dupla) GetDuplaByID(codDupla int) (int, error) {
 
 	queryRoster := `
 		SELECT * FROM DuplasRoster
-		WHERE cod_dupla = ?
+		WHERE cod_dupla = $1
 		ORDER BY inicio_roster DESC
 		LIMIT 1;`
 	row = E.DB.QueryRow(queryRoster, codDupla)

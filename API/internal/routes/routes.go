@@ -24,11 +24,13 @@ func NewRouter() *gin.Engine {
 	dupla := r.Group("/api/duplas")
 	{
 		dupla.GET("/ranking", services.GetRankingDuplas)
+		dupla.GET("/:codDupla", services.GetDuplaByID)
 	}
 
 	evnt := r.Group("/api/eventos")
 	{
 		evnt.GET("/recentes", services.GetEventosRecentes)
+		evnt.GET("/dupla/:codDupla", services.GetEventosByDuplaID)
 	}
 
 	notc := r.Group("/api/noticias")
@@ -40,6 +42,7 @@ func NewRouter() *gin.Engine {
 	part := r.Group("/api/partidas")
 	{
 		part.GET("/recentes", services.GetPartidasRecentes)
+		part.GET("/dupla/:codDupla", services.GetPartidasDupla)
 	}
 
 	poftw := r.Group("/api/player-of-the-week")
