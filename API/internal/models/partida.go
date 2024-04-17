@@ -95,7 +95,8 @@ func (partidas *Partidas) GetPartidasByTimeID(codTime int) (int, error) {
 	query := `
 		SELECT * FROM Partidas
 		WHERE time_casa = $1
-		OR time_fora = $1;`
+		OR time_fora = $1
+		ORDER BY data DESC;`
 
 	rows, err := E.DB.Query(query, codTime)
 	if err != nil {
