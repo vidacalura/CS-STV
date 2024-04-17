@@ -93,3 +93,77 @@ header {
 #data-noticia {
     @apply text-center text-[#AAA] text-sm md:text-base font-bold pt-8 pb-16;
 }
+
+#dupla-container {
+    @apply bg-[#1F1D27] w-[60vw] pb-12;
+    margin: 0 auto;
+}
+#hero-section-dupla {
+    @apply bg-[#353243] py-12 px-16 h-96;
+}
+#hero-section-dupla div {
+    @apply flex w-full;
+    align-items: center;
+}
+#hero-section-dupla h2 {
+    @apply text-2xl font-bold;
+}
+#hero-section-dupla img {
+    @apply w-[6%] mr-4;
+}
+#ranking-dupla-container {
+    @apply pt-8 pb-3 justify-between text-lg border-b-2 border-[#A7A4C6];
+}
+
+#dupla-navbar {
+    @apply flex px-12 py-10 gap-6;
+}
+.dupla-navbar-button {
+    @apply bg-[#393467] py-3 text-center w-32 shadow-md rounded-lg;
+}
+.dupla-navbar-button:hover {
+    @apply cursor-pointer bg-[#645EA1] transition-all;
+}
+
+#container-info-dupla {
+    @apply px-12;
+}
+#container-info-dupla h3 {
+    @apply text-2xl py-8;
+}
+.tabela-dupla-roster-legenda,
+.tabela-dupla-roster-coluna {
+    @apply flex justify-between text-center py-4 mb-3;
+}
+.tabela-dupla-roster-legenda p,
+.tabela-dupla-roster-coluna p {
+    width: calc(100vw / 3);
+}
+.tabela-dupla-roster-legenda {
+    @apply text-[#888];
+}
+.tabela-dupla-roster-coluna {
+    @apply bg-[#242335];
+}
+
+.container-partida-dupla {
+    @apply flex w-full py-4 px-8 mb-4 bg-[#353243] rounded-md shadow-md;
+    align-items: center;
+}
+.data-partida-dupla {
+    @apply w-[20%];
+}
+.container-resultados-partida-dupla {
+    @apply w-[60%] flex justify-between;
+    align-items: center;
+}
+.container-resultados-partida-dupla div {
+    @apply w-[50%] flex justify-between px-4 font-bold;
+    align-items: center;
+}
+.nome-resultados-partida-dupla {
+    @apply text-sm
+}
+.container-resultados-partida-dupla img {
+    @apply w-[15%];
+}
