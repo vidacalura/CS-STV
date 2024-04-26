@@ -26,7 +26,7 @@ type Roster struct {
 	CodRoster    int         `json:"codRoster"`
 	CodDupla     int         `json:"codDupla"`
 	CodIGL       int         `json:"codIGL"`
-	CodJog2      int         `json:"codJog2"`
+	CodJog2      null.Int    `json:"codJog2"`
 	CodJogBench  null.Int    `json:"codJogBench"`
 	CodCoach     null.Int    `json:"codCoach"`
 	InicioRoster string      `json:"inicioRoster"`
