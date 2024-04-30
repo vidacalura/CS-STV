@@ -13,6 +13,7 @@ type Evento struct {
 	Nome    string      `json:"evento"`
 	Inicio  string      `json:"inicio"`
 	Fim     null.String `json:"fim"`
+	Mvp     null.Int    `json:"mvp"`
 }
 
 type Eventos []Evento
@@ -39,7 +40,8 @@ func (e *Eventos) GetEventosRecentes() (int, error) {
 
 	for rows.Next() {
 		var evnt Evento
-		err := rows.Scan(&evnt.CodEvnt, &evnt.Nome, &evnt.Inicio, &evnt.Fim)
+		err := rows.Scan(&evnt.CodEvnt, &evnt.Nome, &evnt.Inicio, &evnt.Fim,
+			&evnt.Mvp)
 		if err != nil {
 			log.Println(err)
 			return http.StatusInternalServerError,
@@ -70,7 +72,8 @@ func (e *Eventos) GetEventosByTimeID(codTime int) (int, error) {
 
 	for rows.Next() {
 		var evnt Evento
-		err := rows.Scan(&evnt.CodEvnt, &evnt.Nome, &evnt.Inicio, &evnt.Fim)
+		err := rows.Scan(&evnt.CodEvnt, &evnt.Nome, &evnt.Inicio, &evnt.Fim,
+			&evnt.Mvp)
 		if err != nil {
 			log.Println(err)
 			return http.StatusInternalServerError,
